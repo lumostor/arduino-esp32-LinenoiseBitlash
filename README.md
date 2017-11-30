@@ -52,8 +52,9 @@ To use this lib you will have to install:
 
 These library are to be installed like normal arduino library. In my case I use platformio so I just create a link in the lib directory of my projects.
 
-# The LinenoiseBitlash class  -- other methods provided by Console class
+# The LinenoiseBitlash class
 
+Other methods provided by Console class
 ```C++
 class LinenoiseBitlash: public Console {
 
