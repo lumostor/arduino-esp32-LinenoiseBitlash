@@ -1,0 +1,15 @@
+{
+  "name": "LinenoiseBitlash",
+  "keywords": "bitlash linenoise console cli shell esp32",
+  "description": "Implement a class inherited from Console for arduino on esp32, the current implementation use linenoise to read the line running in a task and pass this line to Bitlash doCommand(). Which give a linenoise (command line editing and history) frontend to bitlash (C style scripting) ",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/lumostor/arduino-esp32-LinenoiseBitlash.git"
+  },
+  "frameworks": "arduino",
+  "platforms":
+  [
+    "esp32"
+  ]
+}
