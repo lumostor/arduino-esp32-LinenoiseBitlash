@@ -16,7 +16,8 @@
 //
 -->
 
-# LinenoiseBitlash - a console for esp32 that has scrpting of bitlash and linenoise as line editing and history.
+# LinenoiseBitlash
+## - a console for esp32 that has the scripting of bitlash and linenoise as line editing and history.
 
 Bitlash is a tiny interpreter (C like) to which it's possible and easy to add functions to control your project. Have a look at http://bitlash.net/bitlash-users-guide.pdf for a better description. By itself, bitlash, doesn't have line editing and history, beside ^U to recall the last line. LinenoiseBitlash add a better encapsulation and line editing plus history which is done by using linenoise a tiny readline replacement. The resulting line, after pressing "enter", is executed with bitlash doCommand(). Which give, in the end, a tiny bitlash interpreter with readline equivalent line edition and history.
 
@@ -51,7 +52,7 @@ Console library from:     https://github.com/lumostor/arduino-esp32-Console.git
 
 These library are to be installed like normal arduino library. In my case I use platformio so I just create a link in the lib directory of my projects.
 
-#The LinenoiseBitlash class  -- other methods provided by Console class
+# The LinenoiseBitlash class  -- other methods provided by Console class
 
 ```C++
 class LinenoiseBitlash: public Console {
