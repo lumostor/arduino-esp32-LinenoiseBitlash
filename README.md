@@ -21,7 +21,7 @@
 
 Bitlash is a tiny interpreter (C like) to which it's possible and easy to add functions to control your project. Have a look at http://bitlash.net/bitlash-users-guide.pdf for a better description. By itself, bitlash, doesn't have line editing + history, beside ^U to recall the last line. LinenoiseBitlash add a better encapsulation and line editing + history which is done by using linenoise a tiny readline replacement. The resulting line, after pressing "enter", is executed with bitlash doCommand(). Which give, in the end, a tiny bitlash interpreter with readline equivalent line edition and history.
 
-This library offer bitlash plugged with linenoise and a kind of encapsulation. But be advized that bitlash is C code which use a lot of global variable, most of it's code is not reentrant. And this may be the case for linenoise too.
+This library offer bitlash plugged with linenoise and a kind of encapsulation. But be advized that bitlash is C code which use many global variable, part of it's code is not reentrant. And this may be the case for linenoise too.
 
 Due to linenoise a new function is added to bitlash, `termset` or `ts`, to reset the dumb terminal mode of linenoise. In the example below there is a test ( using `termProbe()` ) to probe if the terminal support escape sequences, and set the terminal to dumb mode if not. In dumb mode there is no line editing + history possible but no escape sequence displayed, which, when there is, is quite annoying. So `termset` permit to retest the terminal and change the dumb mode accordingly, a message is displayed if dumb mode is set, no message otherwise; `termset` is useful if you change your terminal and don't want to reset your device.
 
