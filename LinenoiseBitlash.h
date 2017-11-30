@@ -41,6 +41,8 @@ class LinenoiseBitlash: public Console {
     addFunction("ts", (bitlash_function)termset_func);
   }
 
+  // will be executed by Console::consoleTaskStart()
+  // 'virtual' is important for that to be
   virtual void consoleTask() {
     char *line;
     for(;;){

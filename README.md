@@ -20,6 +20,8 @@
 
 Bitlash is a tiny interpreter (C like) to which it's possible and easy to add functions to control your project. Have a look at http://bitlash.net/bitlash-users-guide.pdf for a better description. By itself, bitlash, doesn't have line editing and history, beside ^U to recall the last line. LinenoiseBitlash add a better encapsulation and line editing plus history which is done by using linenoise a tiny readline replacement. The resulting line, after pressing "enter", is executed with bitlash doCommand(). Which give, in the end, a tiny bitlash interpreter with readline equivalent line edition and history.
 
+This library offer bitlash plugged with linenoise and a kind of encapsulation. But be advized that bitlash is C code which use a lot of global variable, most of it's code is not reentrant. And this may be the case for linenoise too.
+
 By default a new function is added to bitlash, `termset` or `ts`, to reset the dumb terminal mode of linenoise. In the example below there is a test ( using `termProbe()` ) to probe if the terminal support escape sequences, and set the terminal to dumb mode if not. In dumb mode there is no line editing and history possible but no escape sequence displayed, which is quite annoying when there is. So `termset` permit to retest the terminal and change the dumb mode accordingly, a message is displayed if dumb mode is set, no message otherwise; `termset` is useful if you change your terminal and don't want to reset your device.
 
 The flash partition used by EEPROMClass, this is done by default, could be used to store bitlash script function (created using function). It you need to use EEPROMClass for other use it is possible by changing some settings in the bitlash code, it is not provided directly by this library, please read  http://bitlash.net/bitlash-users-guide.pdf at page 32, the `bitlash.h` in question is the one in `src` directory. Also when calling "ls" or "help" if you get of a lot of line with something like `function {};\n` alone on the line, it is because your EEPROM values are set to zero (which seems to be the default). You'll have to format it with `rm *`, this will initialize the flash partition used by EEPROM to 0xff. So BEWARE of `rm *`. From there `ls` and `help` will behave normally.
@@ -40,7 +42,7 @@ Pay attention when using bitlash functions like pinmode(pin,mode) pin is numeric
 	BUILT_IN("analog",      "return 12")
 ...
 
-#INSTALL
+# INSTALL
 
 To use this lib you will have to install:
 
@@ -63,6 +65,10 @@ class LinenoiseBitlash: public Console {
 
   // this console task will pass the line to Bitlash doCommand() for parsing.
   virtual void consoleTask();
+  
+  // do the same thing as addBitlashFunction()
+  void addFunction(const char * func_name, bitlash_function func) {
+
 };
 ```
 
@@ -74,6 +80,15 @@ class LinenoiseBitlash: public Console {
 
 LinenoiseBitlash CON;
 
+numvar pin_func(void) {
+
+  // two args this is a set
+  if( getarg(0) == 2 )    ///  getarg(0) is the number of args
+    digitalWrite(getarg(1),getarg(2)); // getarg(1): 1st arg, getarg(2) 2nd arg
+
+  // always return the value read
+  return digitalRead(getarg(1));
+}
 
 setup() {
 
@@ -88,6 +103,13 @@ setup() {
           CON.termDumb(true);
   	}
 
+	// add a new function "pin" to bitlash
+	// could be use as:
+	// > pin(13,0)  # set pin 13 to 0
+	// > print pin(13)
+	// 0
+	CON.addFunction("pin",(bitlash_function)pin_func); 
+	
 	CON.consoleTaskStart( );  // will start a task waiting for input and execute
 			          // it with Bitlash doCommand()
 }
@@ -101,7 +123,7 @@ loop() {
 
 ```
 
-##Interaction example 
+## Interaction example 
 
 ```
 bitlash here! v2.0 (c) 2013 Bill Roy -type HELP- 118096 bytes free
