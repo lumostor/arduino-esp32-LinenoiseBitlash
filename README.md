@@ -82,6 +82,10 @@ class LinenoiseBitlash: public Console {
 
 LinenoiseBitlash CON;
 
+// could be used as:
+// > pin(13,0)  # set pin 13 to 0
+// > print pin(13)
+// 0
 numvar pin_func(void) {
 
   // two args this is a set
@@ -106,10 +110,6 @@ setup() {
   	}
 
 	// add a new function "pin" to bitlash
-	// could be use as:
-	// > pin(13,0)  # set pin 13 to 0
-	// > print pin(13)
-	// 0
 	CON.addFunction("pin",(bitlash_function)pin_func); 
 	
 	CON.consoleTaskStart( );  // will start a task waiting for input and execute
