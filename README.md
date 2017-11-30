@@ -25,11 +25,11 @@ This library offer bitlash plugged with linenoise and a kind of encapsulation. B
 
 By default a new function is added to bitlash, `termset` or `ts`, to reset the dumb terminal mode of linenoise. In the example below there is a test ( using `termProbe()` ) to probe if the terminal support escape sequences, and set the terminal to dumb mode if not. In dumb mode there is no line editing and history possible but no escape sequence displayed, which is quite annoying when there is. So `termset` permit to retest the terminal and change the dumb mode accordingly, a message is displayed if dumb mode is set, no message otherwise; `termset` is useful if you change your terminal and don't want to reset your device.
 
-The flash partition used by EEPROMClass, this is done by default, could be used to store bitlash script function (created using function). It you need to use EEPROMClass for other use it is possible by changing some settings in the bitlash code, it is not provided directly by this library, please read  http://bitlash.net/bitlash-users-guide.pdf at page 32, the `bitlash.h` in question is the one in `src` directory. Also when calling "ls" or "help" if you get of a lot of line with something like `function {};\n` alone on the line, it is because your EEPROM values are set to zero (which seems to be the default). You'll have to format it with `rm *`, this will initialize the flash partition used by EEPROM to 0xff. So BEWARE of `rm *`. From there `ls` and `help` will behave normally.
+The flash partition used by EEPROMClass will be used to store bitlash script function (created using function). It you need to use EEPROMClass for other use it is possible by changing some settings in the bitlash code, it is not provided directly by this library, please read  http://bitlash.net/bitlash-users-guide.pdf at page 32, the `bitlash.h` in question is the one in `src` directory. Also when calling "ls" or "help" if you get of a lot of line with something like `function {};\n` alone on the line, it is because your EEPROM values are set to zero (which seems to be the default). You'll have to format it with `rm *`, this will initialize the flash partition used by EEPROM to 0xff. So BEWARE of `rm *`. From there `ls` and `help` will behave normally.
 
 Pay attention when using bitlash functions like pinmode(pin,mode) pin is numeric, don't use d13 in there it won't work, use 13. And for the mode, beware because INPUT mode is not numeric 0, like in bitlash manual and arduino uno (and probably like a lot of arduino compatible boards), INPUT is numeric 1 and OUTPUT is numeric 2. To ease that aspect the textual mode names have been added as built-in in the esp32 bitlash port, they are not case sensitive, and they are as follow:
 
-'''C
+```C
 	BUILT_IN("low",		"return 0")
 	BUILT_IN("high",	"return 1")
 	BUILT_IN("input",	"return 1")
@@ -41,7 +41,7 @@ Pay attention when using bitlash functions like pinmode(pin,mode) pin is numeric
 	BUILT_IN("open_drain",  "return 16")
 	BUILT_IN("output_open", "return 18")
 	BUILT_IN("analog",      "return 12")
-...
+```
 
 # INSTALL
 
