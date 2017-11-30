@@ -142,7 +142,7 @@ Pins: d0-39,a0-39  Variables: a-z, 32 bit long integers
 Operators: + - * / ( ) < <= > >= == != << >> ! ^ & | ++ -- :=
 Commands: arg boot else function help if ls peep print ps return rm run stop switch while
 Functions:abs ar aw baud bc beep br bs bw constrain delay dr dw er ew free getkey getnum inb isstr max millis min outb pinmode printf pulsein random sign snooze
-termset ts
+termset ts pin
 
 function blink13 {d13=!d13; snooze(100);};
 function tscl {d0=!d0;};
@@ -161,6 +161,16 @@ HAL> i=0; while i<10 { print i; blink13; i++; }
 7
 8
 9
-HAL>
+HAL> pinmode(13,OUTPUT)
+HAL> print pin(13,0)
+0
+HAL> print pin(13)
+0
+HAL> print pin(13,HI)
+1
+HAL> dw(13,LOW)
+HAL> print dr(13)
+0
+HAL> 
 
 ```
