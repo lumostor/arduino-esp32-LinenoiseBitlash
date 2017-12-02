@@ -21,13 +21,13 @@
 
 Bitlash is a tiny interpreter (C like) to which it's possible, and easy, to add functions to control your project, or retreive info from it. Have a look at http://bitlash.net/bitlash-users-guide.pdf for a better description.
 
-By itself, bitlash, doesn't have line editing neither history, beside ^U to recall the last line. LinenoiseBitlash add a better encapsulation (but not real) and line editing + history which is done by using linenoise, a tiny readline replacement. The resulting line, after pressing "enter", is executed with bitlash doCommand(), which give, in the end, a tiny bitlash interpreter with readline equivalent line edition and history.
+By itself, bitlash, doesn't have line editing neither history, beside ^U to recall the last line. LinenoiseBitlash by pluging bitlash to linenoise (a tiny readline replacement), provide line editing/history. The resulting line from linenoise, after pressing "enter", is executed with bitlash's doCommand(), which give, in the end, a tiny bitlash interpreter with readline equivalent line edition/history.
 
-This library offer bitlash plugged with linenoise and a kind of encapsulation. But be advized that bitlash is C code that use many global variable, part of it's code is not reentrant. And this may be the case for linenoise too.
+This library offer bitlash plugged with linenoise and a kind of encapsulation. But be advized that bitlash is C code that use many global variables, part of it's code is not reentrant. And this may be the case for linenoise too.
 
-Due to linenoise a new function have been added to bitlash, `termset` or `ts`, to reset the dumb terminal mode, used by linenoise. In the example below there is a test ( using `termProbe()` ) to probe if the terminal support escape sequences, and set the terminal to dumb mode if not. In dumb mode there is no line editing + history possible but no escape sequence displayed, which, when there is, is quite annoying. So `termset` permit to retest the terminal and change the dumb mode accordingly, a message is displayed if dumb mode is set, no message otherwise; `termset` is useful if you change your terminal and don't want to reset your device.
+Due to linenoise a new function have been added to bitlash, `termset` or `ts`, to reset the dumb terminal mode, used by linenoise. In the example below there is a test ( using `termProbe()` ) to probe if the terminal support escape sequences, and set the terminal to dumb mode if not. In dumb mode there is no line editing/history possible but no escape sequence displayed, which, when there is, is quite annoying. So `termset` permit to retest the terminal and change the dumb mode accordingly, a message is displayed if dumb mode is set, no message otherwise; `termset` is useful if you change your terminal and don't want to reset your device.
 
-The flash partition used by EEPROMClass will be used to store bitlash script function (created using function). It you need to use EEPROMClass for other use it is possible by changing some settings in the bitlash code, it is not provided directly by this library, please read  http://bitlash.net/bitlash-users-guide.pdf at page 32, the `bitlash.h` in question is the one in `src` directory. Also when calling "ls" or "help" if you get a lot of lines that looks like `function {};\n` alone on the line, it is because your EEPROM values are set to zero (which seems to be the default). You'll have to format it with `rm *`, this will initialize the flash partition used by EEPROM to 0xff. From there `ls` and `help` will behave normally.
+The flash partition used by EEPROMClass will be used to store bitlash script function (created using function). It you need to use EEPROMClass for other use, it is possible, by changing some settings in the bitlash code, it is not provided directly by this library, have a look at page 32 of http://bitlash.net/bitlash-users-guide.pdf, the `bitlash.h` in question is the one in `src` directory. Also when calling "ls" or "help" if you get a lot of lines that looks like `function {};\n` alone on the line, it is because your EEPROM values are set to zero, which seems to be the default. You'll have to format it with `rm *`, this will initialize the flash partition used by EEPROM to 0xff. From there `ls` and `help` will behave normally.
 
 When using bitlash functions like pinmode(pin,mode) pin is numeric, don't use d13 in there it won't work, use 13. And for the mode, be aware that INPUT mode is not numeric 0, like in bitlash manual and arduino uno (and probably like a lot of arduino compatible boards), INPUT is numeric 1 and OUTPUT is numeric 2. To ease that aspect mode names have been added as built-in in the esp32 bitlash port, they are not case sensitive, and are as follow:
 
@@ -52,7 +52,7 @@ To use this lib you will have to install:
 * bitlash esp32 port from: https://github.com/lumostor/bitlash-esp32.git
 * Console library from:     https://github.com/lumostor/arduino-esp32-Console.git
 
-These library are to be installed like normal arduino library. In my case I use platformio so I just create a link in the lib directory of my projects.
+These libraries are to be installed like normal arduino library. In my case I use platformio so I just create a link in the lib directory of my projects.
 
 # The LinenoiseBitlash class
 
@@ -168,7 +168,7 @@ HAL> print pin(13,0)
 0
 HAL> print pin(13)
 0
-HAL> print pin(13,HI)
+HAL> print pin(13,HIGH)
 1
 HAL> dw(13,LOW)
 HAL> print dr(13)
